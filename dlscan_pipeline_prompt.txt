@@ -1,0 +1,62 @@
+# DL-SCAN Pipeline Execution Prompt
+
+## Quick Start Instructions
+
+Run the complete DL-SCAN pipeline on the TIFF file specified in the configuration. The pipeline processes fluorescence microscopy data through preprocessing, segmentation, and quantitative analysis.
+
+## Key Information
+
+**Pipeline configuration:** All parameters are read from the `dlscan_params.yaml` file (check the file for paths and parameter values)
+
+**To modify parameters:** Either:
+1. Ask users to modify specific parameters in the YAML file, OR
+2. You do it by applying user-specified value from the prompt, and let them know about this modification clearly after finishing the pipeline
+
+**Important principle:** All preprocessing steps (Gaussian blur, median blur, brightness/contrast, CLAHE) are ONLY for improving segmentation. Intensity measurements are ALWAYS extracted from the original raw images (`stack_raw.npy`), not from preprocessed images.
+
+## Execution Steps
+
+1. **Read the YAML file** first to check current parameters
+2. **Run the complete pipeline** in this order:
+   - Ingest TIFF → produces raw and uint8 stacks
+   - Gaussian Blur → (parameters from YAML)
+   - Median Blur → (parameters from YAML)
+   - Brightness/Contrast → (parameters from YAML)
+   - CLAHE → (parameters from YAML)
+   - Collapsed Max Projection → creates 2D image for segmentation
+   - Rolling Ball Background Subtraction → optional, for segmentation aid only
+   - StarDist 2D Segmentation → segments cells/nuclei on the 2D collapsed image
+   - **Extract Intensity Table from stack_raw.npy** → apply segmentation labels to original raw images
+
+3. **Key pipeline flow:**
+   - Preprocessing chain: Each step uses output from previous step
+   - Segmentation: Performed on 2D collapsed image (with optional RBBC)
+   - Intensity extraction: Uses 3D `stack_raw.npy` (original, unmodified data) with 2D segmentation labels applied to each frame
+
+4. **Handle potential issues:**
+   - If a tool times out (especially segmentation on first run), check the output folder - files may still be created
+   - If segmentation files are missing after completion, rerun the segmentation step
+   - Always verify outputs are in the output directory specified in the YAML file
+
+## Critical Reminders
+
+-  Preprocessing improves segmentation quality
+-  Intensity extraction ALWAYS uses `stack_raw.npy` (not CLAHE or any preprocessed stack)
+- Segmentation labels from 2D image are applied to all frames of the 3D raw stack
+-  Check YAML file before each run for current parameters
+-  Each preprocessing step must use the output from the previous step (sequential chaining)
+
+## Expected Output
+
+After successful completion:
+- Preprocessed stacks (uint8, gaussian, median, bc, clahe)
+- Collapsed 2D image
+- Segmentation labels and RGB visualization
+- **CSV file with intensity measurements** (extracted from raw images)
+
+Generate a detailed summary after the completion of the pipeline in the chat. Include all parameters used and the paths were the files are saved.
+By default, all files saved to the output directory specified in the YAML file.
+
+If there are multiple ".tiff" files in the directory, please run the pipeline for one at a time, saving the output to its dedicated folder. The output structure inside the main output folder for multiple files should look like like "ouput_{corresponding_input_tiff_filename}", "output_{input_tiff_filename}", and so on.
+
+Users can also visualize ".npy" file at any point. Just run the "display_image_video" tool when asked to visualize a certain ".npy", and save it inside the output directory. Let them know where you have saved it.

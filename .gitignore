@@ -1,0 +1,18 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test files
+test.py
+test_py.py
+
+# Output / generated data
+output/
+

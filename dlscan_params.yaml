@@ -1,0 +1,92 @@
+# dlscan_params.yaml
+# Central parameter registry for dlscan_server.py
+# - Keep ALL default values here (used so far + future additions).
+# - Your client (Claude Desktop) can read this file via a simple "read defaults" tool you add to the MCP server.
+# - Paths are absolute unless explicitly absolute.
+
+project:
+  # Work outputs are constrained to live INSIDE the project folder by dlscan_server.py
+  # (server enforces: resolved(work_dir) must be within PROJECT_ROOT).
+  default_work_dir: "G:/Alok/dlscan-mcp"
+
+ingest_tiff:
+  # Tool: ingest_tiff(tiff_path, work_dir, name_raw, name_uint8, per_frame, save)
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_raw: "stack_raw"
+  name_uint8: "stack_uint8"
+  per_frame: true          # true = rescale each frame independently; false = rescale whole stack at once
+  save: true               # true = write .npy files; false = return handles without writing
+
+preprocess_gaussian_blur_stack:
+  # Tool: preprocess_gaussian_blur_stack(stack_npy_path, ksize, work_dir, name_out, save)
+  # NOTE: ksize must be an ODD integer > 0. Example: 3, 5, 7
+  ksize: -1                 # -1 = no-op (DL-SCAN convention)
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "stack_gaussian"
+  save: true
+  
+preprocess_median_blur_stack:
+  ksize: -1        # -1 = no-op (DL-SCAN convention)
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "stack_median"
+  save: true
+
+preprocess_brightness_contrast_stack:
+  brightness: -1   # -1 = skip
+  contrast: -1     # -1 = skip
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "stack_bc"
+  save: true
+
+preprocess_clahe_stack:
+  clip_limit: 1        # -1 = skip entirely
+  tile_grid_size: 8     # used only if clip_limit != -1
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "stack_clahe"
+  save: true
+
+preprocess_collapsed_max_image:
+  mode: 1        # -1 = first frame, 1 = max projection
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "collapsed_MIP_or_first"
+  save: true
+
+preprocess_rolling_ball_bg_sub_image:
+  radius: -1          # -1 = skip entirely
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "image_rball_bgsub"
+  save: true
+
+segment_stardist_2d:
+  model_name: "2D_versatile_fluo"
+  prob_thresh: 0.6
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "labels_stardist"
+  save: true
+
+extract_label_intensity_area_table:
+  area_thres: 0.30
+  channel: 0
+  work_dir: "G:/Alok/dlscan-mcp"
+  out_dir: "G:/Alok/dlscan-mcp/output"
+  name_out: "label_intensity_data"
+  save: true
+
+# Optional: conventions for naming outputs as you add more tools
+naming:
+  suffix_raw: "raw"
+  suffix_uint8: "uint8"
+  suffix_gaussian: "gaussian"
+
+# Optional: safety / validation knobs you may enforce later in code
+validation:
+  enforce_work_dir_inside_project: true
+  allow_pickle_in_np_load: false

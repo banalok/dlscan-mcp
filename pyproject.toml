@@ -1,0 +1,25 @@
+[project]
+name = "dlscan-mcp"
+version = "0.1.0"
+description = "Automated DL-SCAN with LLM"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "csbdeep>=0.8.2",
+    "fastmcp>=2.14.5",
+    "imageio>=2.37.2",
+    "imutils>=0.5.4",
+    "numba>=0.63.1",
+    "numpy>=2.2.0,<2.3.0",
+    "opencv-python>=4.13.0.90",
+    "pandas>=2.3.3",
+    "scikit-image>=0.26.0",
+    "stardist>=0.9.2",
+    "tensorflow>=2.20.0",
+    "tifffile>=2026.1.28",
+    "typing-extensions>=4.15.0",
+]
+[tool.uv]
+environments = [
+    "sys_platform == 'win32'"
+]
