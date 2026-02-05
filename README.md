@@ -106,7 +106,8 @@ Claude will read `dlscan_params.yaml`, execute preprocessing, segmentation, and 
 ## Demo video
 
 **Demo video:** 
-https://github.com/user-attachments/assets/51521fef-9438-414c-846a-6270eca7e6e9
+<video src="https://github.com/user-attachments/assets/51521fef-9438-414c-846a-6270eca7e6e9" width="100%" controls>
+</video>
 
 ---
 
