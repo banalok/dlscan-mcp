@@ -105,7 +105,8 @@ Claude will read `dlscan_params.yaml`, execute preprocessing, segmentation, and 
 
 ## Demo video
 
-▶ **Demo video:** ADD_LINK_HERE
+▶ **Demo video:** 
+![DL-SCAN MCP demo](https://github.com/banalok/dlscan-mcp/blob/master/demo/dlscan-mcp.mp4)
 
 ---
 
