@@ -109,6 +109,11 @@ Claude will read `dlscan_params.yaml`, execute preprocessing, segmentation, and 
 <video src="https://github.com/user-attachments/assets/51521fef-9438-414c-846a-6270eca7e6e9" width="100%" controls>
 </video>
 
+or
+
+![video](https://github.com/banalok/dlscan-mcp/blob/master/demo/dlscan-mcp.mp4)
+
+
 ---
 
 ## Intended workflow
