@@ -2,7 +2,7 @@
 
 An **MCP (Model Context Protocol) server** that exposes the full **DL-SCAN fluorescence microscopy analysis pipeline** as structured, callable tools, designed to be run interactively from **Claude Desktop** (or any MCP-capable client).
 
-This setup allows you to run a complete DL-SCAN pipeline — preprocessing, segmentation, and quantitative analysis — **by issuing a single high-level prompt in Claude**, without writing pipeline scripts.
+This setup allows you to run a complete DL-SCAN pipeline: preprocessing, segmentation, and quantitative analysis, **by issuing a single high-level prompt in Claude**, without writing pipeline scripts.
 
 ---
 
@@ -105,7 +105,7 @@ Claude will read `dlscan_params.yaml`, execute preprocessing, segmentation, and 
 
 ## Demo video
 
-▶ **Demo video:** 
+**Demo video:** 
 https://github.com/user-attachments/assets/51521fef-9438-414c-846a-6270eca7e6e9
 
 ---
